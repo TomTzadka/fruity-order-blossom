@@ -66,14 +66,14 @@ const AdminOrders = () => {
         setOrders(mockOrders);
       } catch (error) {
         console.error('Error fetching orders:', error);
-        toast.error('Failed to load orders');
+        toast.error(language === 'en' ? 'Failed to load orders' : 'נכשל בטעינת הזמנות');
       } finally {
         setIsLoading(false);
       }
     };
     
     fetchOrders();
-  }, []);
+  }, [language]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -87,10 +87,23 @@ const AdminOrders = () => {
   };
 
   const containerDir = language === 'he' ? 'rtl' : 'ltr';
+  const textAlign = language === 'he' ? 'text-right' : 'text-left';
+
+  const getStatusLabel = (status: string) => {
+    if (language === 'en') return status;
+    
+    // Hebrew translations for status
+    switch(status) {
+      case 'completed': return 'הושלם';
+      case 'pending': return 'ממתין';
+      case 'processing': return 'בטיפול';
+      default: return status;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-12" dir={containerDir}>
-      <h1 className={`font-serif text-3xl font-bold mb-6 ${language === 'he' ? 'text-right' : 'text-left'}`}>
+      <h1 className={`font-serif text-3xl font-bold mb-6 ${textAlign}`}>
         {t('admin.orders')}
       </h1>
       
@@ -99,22 +112,22 @@ const AdminOrders = () => {
           <table className="min-w-full divide-y divide-gold/20">
             <thead className="bg-cream">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${textAlign} text-sm font-semibold text-foreground`}>
                   {t('admin.orderId')}
                 </th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${textAlign} text-sm font-semibold text-foreground`}>
                   {t('admin.customer')}
                 </th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${textAlign} text-sm font-semibold text-foreground`}>
                   {t('admin.date')}
                 </th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${textAlign} text-sm font-semibold text-foreground`}>
                   {t('admin.status')}
                 </th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${textAlign} text-sm font-semibold text-foreground`}>
                   {t('admin.total')}
                 </th>
-                <th className="px-6 py-4 text-right text-sm font-semibold text-foreground">
+                <th className={`px-6 py-4 ${language === 'he' ? 'text-left' : 'text-right'} text-sm font-semibold text-foreground`}>
                   {t('admin.actions')}
                 </th>
               </tr>
@@ -138,20 +151,20 @@ const AdminOrders = () => {
               ) : (
                 orders.map((order) => (
                   <tr key={order.id} className="hover:bg-cream/30 transition-colors">
-                    <td className="px-6 py-4 text-sm">{order.id}</td>
-                    <td className="px-6 py-4 text-sm">{order.customer.name}</td>
-                    <td className="px-6 py-4 text-sm">{formatDate(order.createdAt)}</td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className={`px-6 py-4 text-sm ${textAlign}`}>{order.id}</td>
+                    <td className={`px-6 py-4 text-sm ${textAlign}`}>{order.customer.name}</td>
+                    <td className={`px-6 py-4 text-sm ${textAlign}`}>{formatDate(order.createdAt)}</td>
+                    <td className={`px-6 py-4 text-sm ${textAlign}`}>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         order.status === 'completed' ? 'bg-green-100 text-green-800' :
                         order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                         'bg-yellow-100 text-yellow-800'
                       }`}>
-                        {order.status}
+                        {getStatusLabel(order.status)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm">${order.total.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-right text-sm">
+                    <td className={`px-6 py-4 text-sm ${textAlign}`}>${order.total.toFixed(2)}</td>
+                    <td className={`px-6 py-4 ${language === 'he' ? 'text-left' : 'text-right'} text-sm`}>
                       <Button
                         variant="outline"
                         size="sm"

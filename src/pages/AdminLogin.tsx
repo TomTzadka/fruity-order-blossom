@@ -26,13 +26,13 @@ const AdminLogin = () => {
       
       setTimeout(() => {
         setIsLoading(false);
-        toast.success('Login successful');
+        toast.success(language === 'en' ? 'Login successful' : 'התחברות הצליחה');
         navigate('/admin/orders');
       }, 1000);
     } else {
       setTimeout(() => {
         setIsLoading(false);
-        toast.error('Invalid email or password');
+        toast.error(language === 'en' ? 'Invalid email or password' : 'אימייל או סיסמה שגויים');
       }, 1000);
     }
   };

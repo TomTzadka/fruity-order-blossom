@@ -2,7 +2,7 @@
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Flag } from 'lucide-react';
+import { GlobeIcon } from 'lucide-react';
 
 const LanguageSwitcher: React.FC = () => {
   const { language, setLanguage } = useLanguage();
@@ -13,15 +13,15 @@ const LanguageSwitcher: React.FC = () => {
 
   return (
     <Button
-      variant="ghost"
-      size="icon"
+      variant="outline"
+      size="sm"
       onClick={toggleLanguage}
-      className="relative"
+      className="flex items-center gap-1 border-gold text-gold hover:bg-gold/10"
       title={language === 'en' ? 'Switch to Hebrew' : 'Switch to English'}
     >
-      <Flag className="h-5 w-5" />
-      <span className="absolute -bottom-1 -right-1 text-xs font-bold">
-        {language === 'en' ? 'עב' : 'EN'}
+      <GlobeIcon className="h-4 w-4" />
+      <span className="font-bold">
+        {language === 'en' ? 'עברית' : 'English'}
       </span>
     </Button>
   );
