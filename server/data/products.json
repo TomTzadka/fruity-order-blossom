@@ -1,0 +1,91 @@
+
+[
+  {
+    "id": "fruit-001",
+    "name": "Premium Organic Apples",
+    "description": "Crisp, sweet organic apples handpicked from our orchards. Perfect for snacking, baking, or adding to your favorite recipes.",
+    "price": 5.99,
+    "unit": "lb",
+    "category": "fresh",
+    "stock": 100,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": true
+  },
+  {
+    "id": "fruit-002",
+    "name": "Golden Mangoes",
+    "description": "Sweet, juicy mangoes imported from the finest tropical farms. Enjoy the rich flavor of perfectly ripened mangoes.",
+    "price": 7.99,
+    "unit": "lb",
+    "category": "fresh",
+    "stock": 75,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": true
+  },
+  {
+    "id": "fruit-003",
+    "name": "Organic Blueberries",
+    "description": "Sweet and tangy organic blueberries packed with antioxidants. Perfect for breakfast, desserts, or simply enjoying by the handful.",
+    "price": 4.99,
+    "unit": "6 oz",
+    "category": "berries",
+    "stock": 50,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": false
+  },
+  {
+    "id": "fruit-004",
+    "name": "Exotic Dragon Fruit",
+    "description": "Visually stunning and deliciously mild dragon fruit. This tropical delicacy adds vibrant color and nutrition to fruit salads and smoothies.",
+    "price": 9.99,
+    "unit": "each",
+    "category": "exotic",
+    "stock": 30,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": true
+  },
+  {
+    "id": "fruit-005",
+    "name": "Red Seedless Grapes",
+    "description": "Sweet and juicy seedless grapes perfect for snacking. These premium grapes are firm, plump, and refreshing.",
+    "price": 6.49,
+    "unit": "lb",
+    "category": "fresh",
+    "stock": 80,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": false
+  },
+  {
+    "id": "fruit-006",
+    "name": "Organic Strawberries",
+    "description": "Bright red, fragrant organic strawberries. Locally grown and harvested at peak ripeness for the best flavor.",
+    "price": 5.49,
+    "unit": "lb",
+    "category": "berries",
+    "stock": 60,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": true
+  },
+  {
+    "id": "fruit-007",
+    "name": "Premium Avocados",
+    "description": "Creamy, ripe avocados perfect for guacamole, sandwiches, or salads. Rich in healthy fats and nutrients.",
+    "price": 2.99,
+    "unit": "each",
+    "category": "fresh",
+    "stock": 90,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": false
+  },
+  {
+    "id": "fruit-008",
+    "name": "Tropical Pineapple",
+    "description": "Sweet and tangy pineapples from tropical paradise. Pre-cut and ready to enjoy in your favorite dishes or simply on its own.",
+    "price": 4.49,
+    "unit": "each",
+    "category": "tropical",
+    "stock": 40,
+    "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png",
+    "featured": false
+  }
+]
