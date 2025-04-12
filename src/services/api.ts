@@ -49,6 +49,11 @@ export type OrderItem = {
   quantity: number;
 };
 
+export type CardPayment = {
+  method: 'credit_card';
+  last4: string;
+};
+
 export type Order = {
   id?: string;
   items: OrderItem[];
@@ -58,9 +63,21 @@ export type Order = {
     phone: string;
     address: string;
   };
+  payment?: CardPayment;
   total: number;
   status?: string;
   createdAt?: string;
+};
+
+export type AdminOrder = {
+  id: string;
+  customer: {
+    name: string;
+    email: string;
+  };
+  total: number;
+  status: string;
+  createdAt: string;
 };
 
 // API functions
@@ -80,7 +97,22 @@ export async function createOrder(orderData: Omit<Order, 'id' | 'status' | 'crea
   });
 }
 
-// Mock function that doesn't actually hit the backend (since we don't have the backend running)
+export async function getOrders(): Promise<AdminOrder[]> {
+  return fetchAPI<AdminOrder[]>('/orders');
+}
+
+export async function getOrderDetails(orderId: string): Promise<Order> {
+  return fetchAPI<Order>(`/orders/${orderId}`);
+}
+
+export async function adminLogin(email: string, password: string): Promise<{ token: string; success: boolean }> {
+  return fetchAPI<{ token: string; success: boolean }>('/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  });
+}
+
+// Mock functions for development
 export async function mockGetProducts(category?: string): Promise<Product[]> {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
@@ -166,8 +198,104 @@ export async function mockCreateOrder(orderData: Omit<Order, 'id' | 'status' | '
   // Simulate order creation
   const orderId = `ORD${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
   
+  console.log('Created order with data:', orderData);
+  
   return {
     message: 'Order created successfully',
     order_id: orderId
+  };
+}
+
+export async function mockAdminLogin(email: string, password: string): Promise<{ token: string; success: boolean }> {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  if (email === 'admin@example.com' && password === 'admin123') {
+    return {
+      token: 'demo_admin_token',
+      success: true
+    };
+  }
+  
+  throw new Error('Invalid credentials');
+}
+
+export async function mockGetOrders(): Promise<AdminOrder[]> {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  return [
+    {
+      id: 'ORD1001',
+      customer: {
+        name: 'John Doe',
+        email: 'john@example.com'
+      },
+      total: 52.97,
+      status: 'completed',
+      createdAt: '2025-04-10T15:30:00Z'
+    },
+    {
+      id: 'ORD1002',
+      customer: {
+        name: 'Jane Smith',
+        email: 'jane@example.com'
+      },
+      total: 27.45,
+      status: 'pending',
+      createdAt: '2025-04-11T09:45:00Z'
+    },
+    {
+      id: 'ORD1003',
+      customer: {
+        name: 'Michael Johnson',
+        email: 'michael@example.com'
+      },
+      total: 89.99,
+      status: 'processing',
+      createdAt: '2025-04-11T14:20:00Z'
+    }
+  ];
+}
+
+export async function mockGetOrderDetails(orderId: string): Promise<Order> {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  return {
+    id: orderId,
+    customer: {
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '+1 (555) 123-4567',
+      address: '123 Main St, Anytown, USA'
+    },
+    items: [
+      {
+        productId: 'fruit-001',
+        name: 'Premium Organic Apples',
+        price: 5.99,
+        quantity: 3
+      },
+      {
+        productId: 'fruit-002',
+        name: 'Golden Mangoes',
+        price: 7.99,
+        quantity: 2
+      },
+      {
+        productId: 'fruit-004',
+        name: 'Exotic Dragon Fruit',
+        price: 9.99,
+        quantity: 1
+      }
+    ],
+    payment: {
+      method: 'credit_card',
+      last4: '4242'
+    },
+    total: 52.97,
+    status: 'completed',
+    createdAt: '2025-04-10T15:30:00Z'
   };
 }

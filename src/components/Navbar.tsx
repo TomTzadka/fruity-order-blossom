@@ -1,83 +1,145 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu } from 'lucide-react';
-import { 
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
-  const { totalItems } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { items } = useCart();
+  const { t, language } = useLanguage();
+  const navigate = useNavigate();
+  const isAdmin = localStorage.getItem('admin_token') !== null;
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    navigate('/');
+  };
+
+  const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
+
+  const navLinks = [
+    { path: '/', label: t('nav.home') },
+    { path: '/products', label: t('nav.products') },
+    { path: '/about', label: t('nav.about') },
+    { path: '/contact', label: t('nav.contact') },
+  ];
 
   return (
-    <header className="border-b border-gold/20 py-4 px-4 md:px-6 bg-white">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <div className="relative">
-            <img 
-              src="/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png" 
-              alt="La Fruta Logo" 
-              className="h-12 md:h-16 w-auto"
-            />
-          </div>
-        </Link>
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 sm:px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center" onClick={closeMenu}>
+            <span className="text-2xl font-serif font-bold gold-gradient">Golden Fruits</span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-foreground hover:text-gold font-medium transition-colors">
-            Home
-          </Link>
-          <Link to="/products" className="text-foreground hover:text-gold font-medium transition-colors">
-            Shop
-          </Link>
-          <Link to="/about" className="text-foreground hover:text-gold font-medium transition-colors">
-            About
-          </Link>
-          <Link to="/contact" className="text-foreground hover:text-gold font-medium transition-colors">
-            Contact
-          </Link>
-        </nav>
-
-        <div className="flex items-center space-x-4">
-          <Link to="/cart" className="relative">
-            <ShoppingCart className="h-6 w-6 text-foreground hover:text-gold transition-colors" />
-            {totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gold text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {totalItems}
-              </span>
+          {/* Desktop Navigation */}
+          <nav className={`hidden md:flex items-center gap-6 ${language === 'he' ? 'mr-auto' : 'ml-auto'}`}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-foreground/80 hover:text-gold transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            {isAdmin ? (
+              <>
+                <Link to="/admin/orders" className="text-foreground/80 hover:text-gold transition-colors">
+                  {t('nav.admin')}
+                </Link>
+                <Button variant="ghost" onClick={handleLogout}>
+                  {t('nav.logout')}
+                </Button>
+              </>
+            ) : (
+              <Link to="/admin/login" className="text-foreground/80 hover:text-gold transition-colors">
+                {t('nav.login')}
+              </Link>
             )}
-          </Link>
+          </nav>
 
-          {/* Mobile Navigation */}
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="outline" size="icon" className="h-9 w-9 rounded-full">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col space-y-6 mt-8">
-                <Link to="/" className="text-foreground hover:text-gold font-medium text-lg transition-colors">
-                  Home
-                </Link>
-                <Link to="/products" className="text-foreground hover:text-gold font-medium text-lg transition-colors">
-                  Shop
-                </Link>
-                <Link to="/about" className="text-foreground hover:text-gold font-medium text-lg transition-colors">
-                  About
-                </Link>
-                <Link to="/contact" className="text-foreground hover:text-gold font-medium text-lg transition-colors">
-                  Contact
-                </Link>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          {/* Actions */}
+          <div className="flex items-center gap-3 md:gap-4">
+            <LanguageSwitcher />
+            
+            <Link to="/cart" className="relative p-1" aria-label="Cart">
+              <ShoppingCart className="h-6 w-6 text-foreground/80 hover:text-gold transition-colors" />
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gold text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartItemsCount}
+                </span>
+              )}
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={toggleMenu}
+              className="p-1 md:hidden"
+              aria-label="Menu"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <nav className="md:hidden mt-4 pb-2 space-y-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block py-2 text-foreground/80 hover:text-gold"
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {isAdmin ? (
+              <>
+                <Link 
+                  to="/admin/orders" 
+                  className="block py-2 text-foreground/80 hover:text-gold"
+                  onClick={closeMenu}
+                >
+                  {t('nav.admin')}
+                </Link>
+                <Button variant="ghost" onClick={() => {
+                  handleLogout();
+                  closeMenu();
+                }}>
+                  {t('nav.logout')}
+                </Button>
+              </>
+            ) : (
+              <Link 
+                to="/admin/login" 
+                className="block py-2 text-foreground/80 hover:text-gold"
+                onClick={closeMenu}
+              >
+                {t('nav.login')}
+              </Link>
+            )}
+          </nav>
+        )}
       </div>
     </header>
   );
