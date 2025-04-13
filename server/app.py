@@ -4,9 +4,27 @@ from flask_cors import CORS
 import json
 import os
 import datetime
+from flask_migrate import Migrate
+from extensions import db
+from flask_migrate import Migrate
+from config import Config
 
+
+
+# יצירת האפליקציה
 app = Flask(__name__)
+app.config.from_object(Config)
+
+# הגדרת CORS
 CORS(app)
+
+# חיבור DB ו-Migrate
+db.init_app(app)
+migrate = Migrate(app, db)
+
+# לייבא את כל המודלים
+from models import Product, Customer, Order
+
 
 # Load product data from JSON file
 def load_products():
