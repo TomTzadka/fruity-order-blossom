@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+    command: flask run --host=0.0.0.0 --port=5000 --reload
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    restart: always
+
+  frontend:
+    build: ./client
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    # command: npm run dev -- --host
+    command: yarn dev -- --host
+    restart: always

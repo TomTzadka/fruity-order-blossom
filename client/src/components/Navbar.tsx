@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={closeMenu}>
-            <span className="text-2xl font-serif font-bold gold-gradient">Golden Fruits</span>
+            <span className="text-2xl font-serif font-bold gold-gradient">La Fruta</span>
           </Link>
 
           {/* Desktop Navigation */}

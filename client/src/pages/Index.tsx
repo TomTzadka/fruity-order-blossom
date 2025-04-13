@@ -5,14 +5,17 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/ProductCard';
-import { mockGetProducts, Product } from '@/services/api';
+import { getProducts, Product } from '@/services/api';
+
 
 const Index = () => {
   const { data: featuredProducts, isLoading } = useQuery({
     queryKey: ['products', 'featured'],
     queryFn: async () => {
-      const products = await mockGetProducts();
-      return products.filter(product => product.featured);
+      const products = await getProducts('all', true);
+      console.log('featuredProducts:', featuredProducts);
+      return products;
+      // return products.filter(product => product.featured);
     },
   });
 

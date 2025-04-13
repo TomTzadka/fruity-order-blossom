@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { mockGetProduct } from '@/services/api';
+import { getProduct } from '@/services/api';
 import { useCart } from '@/context/CartContext';
 
 const ProductDetail = () => {
@@ -15,7 +15,7 @@ const ProductDetail = () => {
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
-    queryFn: () => mockGetProduct(id!),
+    queryFn: () => getProduct(id!),
     enabled: !!id,
   });
 

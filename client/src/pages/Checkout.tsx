@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { mockCreateOrder } from '@/services/api';
+import { createOrder } from '@/services/api';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -81,7 +81,7 @@ const Checkout = () => {
       };
 
       // Send order to backend
-      const response = await mockCreateOrder(orderData);
+      const response = await createOrder(orderData);
       
       // Clear cart and show success message
       clearCart();

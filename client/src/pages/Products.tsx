@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { mockGetProducts } from '@/services/api';
+import { getProducts } from '@/services/api';
 import ProductCard from '@/components/ProductCard';
 import {
   Select,
@@ -24,7 +24,7 @@ const Products = () => {
 
   const { data: products, isLoading } = useQuery({
     queryKey: ['products', selectedCategory],
-    queryFn: () => mockGetProducts(selectedCategory),
+    queryFn: () => getProducts(selectedCategory),
   });
 
   const handleCategoryChange = (value: string) => {

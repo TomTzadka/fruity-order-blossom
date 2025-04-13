@@ -2,9 +2,9 @@
 [
   {
     "id": "fruit-001",
-    "name": "Premium Organic Apples",
+    "name": "Premium Organic apple!!!",
     "description": "Crisp, sweet organic apples handpicked from our orchards. Perfect for snacking, baking, or adding to your favorite recipes.",
-    "price": 5.99,
+    "price": 6.000,
     "unit": "lb",
     "category": "fresh",
     "stock": 100,

@@ -10,17 +10,20 @@ CORS(app)
 
 # Load product data from JSON file
 def load_products():
-    with open('server/data/products.json') as f:
+    data_path = os.path.join(os.path.dirname(__file__), 'data', 'products.json')
+    with open(data_path) as f:
         return json.load(f)
 
 # Load orders data from JSON file, create if doesn't exist
 def load_orders():
-    if not os.path.exists('server/data/orders.json'):
-        with open('server/data/orders.json', 'w') as f:
+    data_path = os.path.join(os.path.dirname(__file__), 'data', 'orders.json')
+    if not os.path.exists(data_path):
+        with open(data_path, 'w') as f:
             json.dump([], f)
     
-    with open('server/data/orders.json') as f:
+    with open(data_path) as f:
         return json.load(f)
+
 
 # Save orders data to JSON file
 def save_orders(orders):
@@ -31,12 +34,17 @@ def save_orders(orders):
 @app.route('/api/products', methods=['GET'])
 def get_products():
     category = request.args.get('category')
+    featured = request.args.get('featured')
     products = load_products()
-    
+
     if category and category != 'all':
         products = [p for p in products if p['category'] == category]
-    
+
+    if featured == 'true':
+        products = [p for p in products if p.get('featured') == True]
+
     return jsonify(products)
+
 
 @app.route('/api/products/<product_id>', methods=['GET'])
 def get_product(product_id):
