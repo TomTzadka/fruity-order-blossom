@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+.vite/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# OS Files
+.DS_Store
+
+# Environment
+.env
+.env.*
