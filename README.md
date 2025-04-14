@@ -112,3 +112,80 @@ sudo docker volume prune -f
 - Production Deployment with Nginx & Gunicorn
 
 ---
+Fruity Order Blossom
+
+An interactive fruit ordering web application built with React (Vite) frontend, Flask backend, and PostgreSQL database using Docker.
+
+Live Demo
+
+https://tomtzadka.github.io/fruity-order-blossom/
+
+Note: If you see a 404 error on page load - click the Home button in the navbar to navigate correctly.
+
+Project Structure
+
+fruity-order-blossom/
+├── client/     # React + Vite frontend
+├── server/     # Flask backend
+├── docker-compose.yml
+├── .env        # Root env for Docker
+
+Installation & Running Locally
+
+1. Clone the repository
+
+git clone https://github.com/TomTzadka/fruity-order-blossom.git
+cd fruity-order-blossom
+
+2. Docker Up
+
+sudo docker compose up -d --build
+
+3. Migrate DB
+
+sudo docker compose exec backend flask db upgrade
+
+Frontend: http://localhost:8080Backend API: http://localhost:5000
+
+Deploy to GitHub Pages (Frontend Only)
+
+Navigate to client/:
+
+cd client
+yarn install
+yarn deploy
+
+Make sure your vite.config.ts has:
+
+base: '/fruity-order-blossom/'
+
+Environment Variables
+
+Root .env (Docker Compose):
+
+POSTGRES_USER=fruity_user
+POSTGRES_PASSWORD=fruity_pass
+POSTGRES_DB=fruity_db
+
+client/.env (Vite frontend):
+
+VITE_API_URL=http://localhost:5000
+
+Tech Stack
+
+Frontend: React, Vite, TailwindCSS
+
+Backend: Python, Flask, SQLAlchemy, Alembic
+
+DB: PostgreSQL
+
+DevOps: Docker, GitHub Pages
+
+Notes
+
+The production backend is not deployed yet.
+
+GitHub Pages serves only the frontend static files.
+
+Always run docker compose down when rebuilding environment.
+
