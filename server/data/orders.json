@@ -1,0 +1,15 @@
+[
+  {
+    "customer": {
+      "name": "Tom",
+      "email": "tom@gmail.com"
+    },
+    "total": 100,
+    "payment": {
+      "method": "cash"
+    },
+    "id": "ORD0001",
+    "status": "pending",
+    "createdAt": "2025-04-14T11:08:54.127243"
+  }
+]
