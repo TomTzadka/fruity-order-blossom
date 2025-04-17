@@ -11,5 +11,35 @@
     "id": "ORD0001",
     "status": "pending",
     "createdAt": "2025-04-14T11:08:54.127243"
+  },
+  {
+    "customer": {
+      "name": "tete",
+      "email": "tomtzadka@gmail.com"
+    },
+    "total": 11.49,
+    "items": [
+      {
+        "id": "fruit-001",
+        "name": "Premium Organic apple!!!",
+        "price": 6,
+        "quantity": 1,
+        "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png"
+      },
+      {
+        "id": "fruit-006",
+        "name": "Organic Strawberries",
+        "price": 5.49,
+        "quantity": 1,
+        "image": "/lovable-uploads/07bd8d54-aafb-4481-83e7-d5533029f0db.png"
+      }
+    ],
+    "notes": "assd",
+    "payment": {
+      "method": "cash"
+    },
+    "id": "ORD0002",
+    "status": "pending",
+    "createdAt": "2025-04-17T16:36:37.866483"
   }
 ]

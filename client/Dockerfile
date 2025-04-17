@@ -2,12 +2,16 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+# Copy package info
+COPY package.json yarn.lock ./
 
-RUN npm install
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
+# Copy source files
 COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "run", "dev", "--", "--host"]
+# Run dev server
+CMD ["yarn", "dev", "--host"]

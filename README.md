@@ -1,191 +1,96 @@
 
-# Fruity Order Blossom 🍓🍍🍊
+# 🍓 Fruity Order Blossom
 
-Online Fruit Ordering System  
-Frontend - React + Vite  
-Backend - Flask  
-Database - PostgreSQL  
-Dockerized Environment
+A full-stack fruit ordering web app built with **React (Vite)**, **Flask**, **PostgreSQL**, and **Stripe** integration.
 
 ---
 
-## Development Setup
+## 🚀 Getting Started
 
-### Prerequisites:
-- Docker
-- Docker Compose
-- Node.js (for local frontend development)
-
----
-
-## Project Structure:
-```
-fruity-order-blossom/
-│
-├── server/         ← Flask API
-│   ├── .env        ← Backend Environment Variables
-│
-├── client/         ← React Frontend
-│   ├── .env        ← Frontend Environment Variables
-│
-├── docker-compose.yml
-└── volumes:        ← PostgreSQL Data Storage
-```
-
----
-
-## Environment Variables:
-
-### server/.env:
-```env
-FLASK_ENV=development
-DB_HOST=db
-DB_NAME=fruity_db
-DB_USER=fruity_user
-DB_PASS=fruity_pass
-```
-
-### client/.env:
-```env
-VITE_API_URL=http://localhost:5000
-```
-
----
-
-## Run the Project:
+### 1. Clone the repo
 
 ```bash
-# Build and start all services
-sudo docker compose up -d --build
-
-# Backend logs
-sudo docker compose logs backend -f
-
-# Frontend logs
-sudo docker compose logs frontend -f
-
-# Run Migrations
-sudo docker compose exec backend flask db upgrade
-```
-
----
-
-## Access URLs:
-
-| Service  | URL                    | Description        |
-|----------|------------------------|-------------------|
-| Frontend | http://localhost:8080  | Web Application   |
-| Backend  | http://localhost:5000  | REST API          |
-| Database | localhost:5432         | PostgreSQL DB     |
-
----
-
-## Database Management:
-
-```bash
-# Connect to PostgreSQL
-sudo docker compose exec db psql -U fruity_user fruity_db
-```
-
----
-
-## Common Commands:
-
-### Stop all services:
-```bash
-sudo docker compose down
-```
-
-### Clean all containers, images, and volumes:
-```bash
-sudo docker system prune -af
-sudo docker volume prune -f
-```
-
----
-
-## Future Improvements:
-- Payment System
-- Authentication
-- Admin Dashboard
-- Inventory Management
-- Production Deployment with Nginx & Gunicorn
-
----
-Fruity Order Blossom
-
-An interactive fruit ordering web application built with React (Vite) frontend, Flask backend, and PostgreSQL database using Docker.
-
-Live Demo
-
-https://tomtzadka.github.io/fruity-order-blossom/
-
-Note: If you see a 404 error on page load - click the Home button in the navbar to navigate correctly.
-
-Project Structure
-
-fruity-order-blossom/
-├── client/     # React + Vite frontend
-├── server/     # Flask backend
-├── docker-compose.yml
-├── .env        # Root env for Docker
-
-Installation & Running Locally
-
-1. Clone the repository
-
 git clone https://github.com/TomTzadka/fruity-order-blossom.git
 cd fruity-order-blossom
+```
 
-2. Docker Up
+### 2. Create Environment Variables
 
-sudo docker compose up -d --build
+Create `.env` files in `client` and `server` directories:
 
-3. Migrate DB
-
-sudo docker compose exec backend flask db upgrade
-
-Frontend: http://localhost:8080Backend API: http://localhost:5000
-
-Deploy to GitHub Pages (Frontend Only)
-
-Navigate to client/:
-
-cd client
-yarn install
-yarn deploy
-
-Make sure your vite.config.ts has:
-
-base: '/fruity-order-blossom/'
-
-Environment Variables
-
-Root .env (Docker Compose):
-
-POSTGRES_USER=fruity_user
-POSTGRES_PASSWORD=fruity_pass
-POSTGRES_DB=fruity_db
-
-client/.env (Vite frontend):
-
+#### `client/.env`:
+```
 VITE_API_URL=http://localhost:5000
+VITE_STRIPE_PUBLIC_KEY=pk_test_...
+```
 
-Tech Stack
+#### `server/.env`:
+```
+STRIPE_SECRET_KEY=sk_test_...
+```
 
-Frontend: React, Vite, TailwindCSS
+### 3. Run the App (Docker)
 
-Backend: Python, Flask, SQLAlchemy, Alembic
+```bash
+sudo docker compose up --build -d
+```
 
-DB: PostgreSQL
+Access:
+- Frontend: http://localhost:8080
+- Backend API: http://localhost:5000/api
 
-DevOps: Docker, GitHub Pages
+---
 
-Notes
+## 🧪 API Overview
 
-The production backend is not deployed yet.
+| Method | Endpoint               | Description                  |
+|--------|------------------------|------------------------------|
+| GET    | `/api/products`        | Get all products             |
+| GET    | `/api/products/:id`    | Get product by ID            |
+| POST   | `/api/orders`          | Create new order             |
+| GET    | `/api/orders`          | List all orders              |
+| GET    | `/api/orders/:id`      | Get single order             |
+| POST   | `/api/login`           | Admin login (demo)           |
+| POST   | `/api/payments/create-intent` | Create Stripe payment intent |
 
-GitHub Pages serves only the frontend static files.
+---
 
-Always run docker compose down when rebuilding environment.
+## 🧾 Admin Login
 
+Use the following credentials:
+```json
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+```
+
+---
+
+## 🌐 Deploy Frontend to GitHub Pages
+
+From the `client` folder:
+
+```bash
+yarn deploy
+```
+
+Ensure `package.json` includes:
+
+```json
+"homepage": "https://<username>.github.io/fruity-order-blossom",
+"scripts": {
+  "predeploy": "yarn build",
+  "deploy": "gh-pages -d dist"
+}
+```
+
+---
+
+## ⚠️ Notes
+
+- Stripe is currently in test mode.
+- Credit card numbers must use Stripe test data (e.g. `4242 4242 4242 4242`).
+- Make sure to keep all API keys safe!
+
+---

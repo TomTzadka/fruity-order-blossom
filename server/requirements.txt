@@ -3,3 +3,6 @@ flask-cors
 watchdog
 Flask-Migrate
 psycopg2-binary
+stripe
+python-dotenv
+
